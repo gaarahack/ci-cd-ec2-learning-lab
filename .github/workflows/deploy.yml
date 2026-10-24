@@ -23,3 +23,7 @@ jobs:
           cp index.html /var/www/html/index.html
           chmod 644 /var/www/html/index.html
 
+      - name: Confirm deployment
+        run: |
+          cmp -s index.html /var/www/html/index.html
+          echo "Deployment successful!"
