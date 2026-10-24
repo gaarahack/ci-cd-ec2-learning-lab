@@ -1,0 +1,29 @@
+name: Deploy Website
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v7.0.1
+
+      - name: Check website file
+        run: test -f index.html
+
+      - name: Deploy website
+        run: |
+          cp index.html /var/www/html/index.html
+          chmod 644 /var/www/html/index.html
+
+      - name: Confirm deployment
+        run: |
+          grep -q "My First CI/CD Deployment" /var/www/html/index.html
+          echo "Deployment successful!"
